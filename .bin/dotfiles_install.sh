@@ -33,7 +33,7 @@ RET=$?
 #echo "RET of grep .bashrc.d = $RET"
 if [ "$RET" != "0" ]
 then
-	cat << EOF >> $BASHRC_FILE
+	cat << 'EOF' >> $BASHRC_FILE
 
 BASHRC_DIR=$HOME/.bashrc.d
 if [[ -d $BASHRC_DIR && -r $BASHRC_DIR && -x $BASHRC_DIR ]]; then
