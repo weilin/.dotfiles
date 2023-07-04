@@ -30,7 +30,7 @@ function find_epop()
 	find -type f -name \*.png |sort 
 }
 
-function openfile_ui()
+function openfile_gui()
 {
 	nautilus $1 2>&1 >/dev/null &
 }
