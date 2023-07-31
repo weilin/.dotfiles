@@ -1,7 +1,14 @@
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
+
 "set background=dark
+"set guifont=Menlo-Regular:h16
+"set guifont=Menlo\ Regular:h16
+"set gfn=Menlo\ Regular:h16
+"set gfn=Menlo-Regular:h14
+"set gfn=Monaco:h14
+"set linespace=2
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -40,67 +47,68 @@ set hlsearch
 
 " settings of cscope.
 " I use GNU global instead cscope because global is faster.
-set cscopetag
-set cscopeprg=gtags-cscope
-set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
-nmap <silent> <leader>j <ESC>:cstag <c-r><c-w><CR>
-nmap <silent> <leader>g <ESC>:lcs f c <c-r><c-w><cr>:lw<cr>
-nmap <silent> <leader>s <ESC>:lcs f s <c-r><c-w><cr>:lw<cr>
-command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
-au VimEnter * call VimEnterCallback()
-au BufAdd *.[ch] call FindGtags(expand('<afile>'))
-au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-  
-let g:rg_highlight='true'
-nnoremap <silent> <F8> :TlistToggle<CR>
+if has("cscope")
+	set cscopetag
+	set cscopeprg=gtags-cscope
+	set cscopequickfix=c-,d-,e-,f-,g0,i-,s-,t-
+	nmap <silent> <leader>j <ESC>:cstag <c-r><c-w><CR>
+	nmap <silent> <leader>g <ESC>:lcs f c <c-r><c-w><cr>:lw<cr>
+	nmap <silent> <leader>s <ESC>:lcs f s <c-r><c-w><cr>:lw<cr>
+	command! -nargs=+ -complete=dir FindFiles :call FindFiles(<f-args>)
+	au VimEnter * call VimEnterCallback()
+	au BufAdd *.[ch] call FindGtags(expand('<afile>'))
+	au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
 
-function! FindFiles(pat, ...)
-     let path = ''
-     for str in a:000
-         let path .= str . ','
-     endfor
-  
-     if path == ''
-         let path = &path
-     endif
-  
-     echo 'finding...'
-     redraw
-     call append(line('$'), split(globpath(path, a:pat), '\n'))
-     echo 'finding...done!'
-     redraw
-endfunc
-  
-function! VimEnterCallback()
-     for f in argv()
-         if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h' && fnamemodify(f, ':e') != 'cpp'
-             continue
-         endif
-  
-         call FindGtags(f)
-     endfor
-endfunc
-  
-function! FindGtags(f)
-     let dir = fnamemodify(a:f, ':p:h')
-     while 1
-         let tmp = dir . '/GTAGS'
-         if filereadable(tmp)
-             exe 'cs add ' . tmp . ' ' . dir
-             break
-         elseif dir == '/'
-             break
-         endif
-  
-         let dir = fnamemodify(dir, ":h")
-     endwhile
-endfunc
-  
-function! UpdateGtags(f)
-     let dir = fnamemodify(a:f, ':p:h')
-     exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
-endfunction
+	let g:rg_highlight='true'
+	nnoremap <silent> <F8> :TlistToggle<CR>
 
+	function! FindFiles(pat, ...)
+	     let path = ''
+	     for str in a:000
+		 let path .= str . ','
+	     endfor
+
+	     if path == ''
+		 let path = &path
+	     endif
+
+	     echo 'finding...'
+	     redraw
+	     call append(line('$'), split(globpath(path, a:pat), '\n'))
+	     echo 'finding...done!'
+	     redraw
+	endfunc
+
+	function! VimEnterCallback()
+	     for f in argv()
+		 if fnamemodify(f, ':e') != 'c' && fnamemodify(f, ':e') != 'h' && fnamemodify(f, ':e') != 'cpp'
+		     continue
+		 endif
+
+		 call FindGtags(f)
+	     endfor
+	endfunc
+
+	function! FindGtags(f)
+	     let dir = fnamemodify(a:f, ':p:h')
+	     while 1
+		 let tmp = dir . '/GTAGS'
+		 if filereadable(tmp)
+		     exe 'cs add ' . tmp . ' ' . dir
+		     break
+		 elseif dir == '/'
+		     break
+		 endif
+ 
+		 let dir = fnamemodify(dir, ":h")
+	     endwhile
+	endfunc
+
+	function! UpdateGtags(f)
+	     let dir = fnamemodify(a:f, ':p:h')
+	     exe 'silent !cd ' . dir . ' && global -u &> /dev/null &'
+	endfunction
+endif
 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
