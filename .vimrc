@@ -10,6 +10,12 @@
 "set gfn=Monaco:h14
 "set linespace=2
 
+if has("unnamedplus")
+    set clipboard=unnamedplus
+else
+    set clipboard=unnamed
+endif
+
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -150,6 +156,7 @@ Plug 'aceofall/gtags.vim'
 Plug 'vim-scripts/XML-Folding'
 Plug 'rust-lang/rust.vim'
 Plug 'jremmen/vim-ripgrep'
+Plug 'gburca/vim-logcat'
 
 " Initialize plugin system
 call plug#end()
