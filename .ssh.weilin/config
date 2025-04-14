@@ -3,6 +3,26 @@ Host vmlinux
     User weilin
     IdentityFile ~/.ssh/weilin/clover_build_id_ed25519
 
+Host 10.211.55.3
+    HostName 10.211.55.3
+    User weilin
+    IdentityFile ~/.ssh/weilin/clover_build_id_ed25519
+
+Host 192.168.100.111
+    HostName 192.168.100.111
+    User weilin
+    IdentityFile ~/.ssh/weilin/weilin-station_id_ed25519
+
+Host 192.168.50.200
+    HostName 192.168.50.200
+    User weilin
+    IdentityFile ~/.ssh/weilin/weilin-station_id_ed25519
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/weilin/weilin_github_id_ed25519
+
 Host github.com
     HostName github.com
     User git
@@ -30,6 +50,16 @@ Host 122.116.117.50
 
 Host weilin_station
     HostName 192.168.100.100
+    User weilin
+    IdentityFile ~/.ssh/weilin/weilin-station_id_ed25519
+
+Host qc2clover.asuscomm.com
+    HostName qc2clover.asuscomm.com
+    User weilin
+    IdentityFile ~/.ssh/weilin/weilin-station_id_ed25519
+
+Host weilin_rog
+    HostName qc2clover.asuscomm.com
     User weilin
     IdentityFile ~/.ssh/weilin/weilin-station_id_ed25519
 
