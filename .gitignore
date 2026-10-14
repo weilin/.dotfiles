@@ -1,0 +1,6 @@
+.ssh*
+.vim/
+.vimrc
+.config/nvim/
+.dek_bashrc.d/
+.config/dek-shell/
